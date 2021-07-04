@@ -1,3 +1,7 @@
+// Class Box implements a bounding box for an object.  Instance params are the center of the box
+// the height and width, and an length 4 array of verteces. 
+
+
 class Box {
 
 	private Point center;
@@ -9,6 +13,9 @@ class Box {
 	private Point[] verts; 
 
 
+/*  The Constructor of Box.
+	Parameters: center, the center of the bounding box; height, width: the height and width of the box */
+	
 	public Box(Point center, double width , double height) {
 
 		this.center = center;
@@ -24,6 +31,7 @@ class Box {
 				   
 	}
 
+// Getters and Setters
 
 	public Point getCenter() {
 
@@ -46,6 +54,7 @@ class Box {
 		return verts;
 	}
 
+// Translate the Box by the vector x,y
 
 	public void translate(double x, double y) {
 
@@ -56,6 +65,7 @@ class Box {
 
 	}
 
+// Rotate the box around a point by angle theta in radians.  To rotate around the center, call box.rotate(Math.pi/2, box.getCenter())
 	public void rotate(double theta, Point center) {
 
 		for (Point point: verts) {
@@ -64,6 +74,9 @@ class Box {
 		}
 
 	}
+
+
+// Checks if a point is in the box
 
 	public boolean contains(Point point) {
 
@@ -77,11 +90,21 @@ class Box {
 		}
 	}
 
+
+// Checks if another box intersects the box. If two boxes intersect, of the eight verteces,
+// At least one must be contained in the other... 
+
 	public boolean doesIntersect(Box box) {
+
 
 		for (Point point:box.getVerts()) {
 
 			if (this.contains(point)) return true;
+		}
+
+		for (Point point: this.verts) {
+
+			if (box.contains(point)) return true;
 		}
 
 		return false;
