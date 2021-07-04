@@ -91,13 +91,20 @@ class Box {
 	}
 
 
-// Checks if another box intersects the box
-	
+// Checks if another box intersects the box. If two boxes intersect, of the eight verteces,
+// At least one must be contained in the other... 
+
 	public boolean doesIntersect(Box box) {
+
 
 		for (Point point:box.getVerts()) {
 
 			if (this.contains(point)) return true;
+		}
+
+		for (Point point: this.verts) {
+
+			if (box.contains(point)) return true;
 		}
 
 		return false;
