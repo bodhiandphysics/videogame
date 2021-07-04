@@ -41,13 +41,13 @@ class Point {
 
 // Rotate the point, by angle theta, treating Point center as origin of the plane
 
-	
+
 	public void rotate(double theta, Point center) {
 
 		//First translate origin to Point
 
-		double origin_x = this.x - center.x;
-		double origin_y = this.y - center.y;
+		double origin_x = this.x - center.getX();
+		double origin_y = this.y - center.getY();
 
 		//then rotate
 
@@ -56,8 +56,8 @@ class Point {
 
 		//then translate back
 
-		this.x = origin_xr + center.x;
-		this.y = origin_xr + center.y;
+		this.x = origin_xr + center.getX();
+		this.y = origin_xr + center.getY();
 	}
 
 }
