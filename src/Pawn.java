@@ -11,7 +11,7 @@ class Pawn {
 
 	//private CollisionManager colmangr;  TODO once CollisionManager is implemented
 
-
+	//No Constructor, because Pawn will never be instantiated directly
 
 	//Getters and Setters
 
