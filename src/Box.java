@@ -12,9 +12,12 @@ class Box {
 
 	private Point[] verts; 
 
+	private Lineseg[] linesegs; 
+
 
 /*  The Constructor of Box.
-	Parameters: center, the center of the bounding box; height, width: the height and width of the box */
+	Parameters: center, the center of the bounding box; height, width: the height and width of the box
+	Note boxes always start parralel to axis... but can be rotated */
 	
 	public Box(Point center, double width , double height) {
 
@@ -24,10 +27,15 @@ class Box {
 
 		this.height = height;
 
-		Point[] verts = {new Point(this.center.getX() - (width/2), this.center.getY() - (height/2)),
-						 new Point(this.center.getX() + (width/2), this.center.getY() - (height/2)),
-						 new Point(this.center.getX() - (width/2), this.center.getY() + (height/2)),
-						 new Point(this.center.getX() + (width/2), this.center.getY() + (height/2))};
+		this.verts = new Point[] {new Point(this.center.x - (width/2), this.center.y - (height/2)),
+						 new Point(this.center.x + (width/2), this.center.y - (height/2)),
+						 new Point(this.center.x - (width/2), this.center.y + (height/2)),
+						 new Point(this.center.x + (width/2), this.center.y + (height/2))};
+
+		this.linesegs = new Lineseg[] {new Lineseg(this.verts[0], this.verts[1]),
+						 new Lineseg(this.verts[0], this.verts[2]),
+						 new Lineseg(this.verts[1], this.verts[3]),
+						 new Lineseg(this.verts[2], this.verts[3])};
 				   
 	}
 
@@ -80,7 +88,7 @@ class Box {
 
 	public boolean contains(Point point) {
 
-		if (Math.abs(center.getX() - point.getX()) <= (width / 2) && (Math.abs(center.getY() - point.getY()) <= height /2)) {
+		if (Math.abs(this.center.x - point.x) <= (width / 2) && (Math.abs(this.center.y - point.y) <= height /2)) {
 
 			return true;
 		
@@ -91,20 +99,16 @@ class Box {
 	}
 
 
-// Checks if another box intersects the box. If two boxes intersect, of the eight verteces,
-// At least one must be contained in the other... 
-
+// Checks if another box intersects the box. 
 	public boolean doesIntersect(Box box) {
 
 
-		for (Point point:box.getVerts()) {
+// Check if any linesegs in the boxes intercept
 
-			if (this.contains(point)) return true;
-		}
-
-		for (Point point: this.verts) {
-
-			if (box.contains(point)) return true;
+		for (Lineseg lineseg: this.linesegs) {
+			for (Lineseg otherseg: box.linesegs) {
+				if (lineseg.doesIntercept(otherseg)) return true;
+			}
 		}
 
 		return false;

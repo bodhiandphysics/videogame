@@ -3,9 +3,9 @@
 
 class Point {
 
-	private double x;
+	public double x;
 
-	private double y;
+	public double y;
 
 
 // Constructor of the point
@@ -18,17 +18,6 @@ class Point {
 	}
 
 
-// Getters and Setters
-
-	public double getX() {
-
-		return x;
-	}
-
-	public double getY() {
-
-		return y;
-	}
 
 // Translate the Point by the vector x y
 
@@ -46,8 +35,8 @@ class Point {
 
 		//First translate origin to Point
 
-		double origin_x = this.x - center.getX();
-		double origin_y = this.y - center.getY();
+		double origin_x = this.x - center.x;
+		double origin_y = this.y - center.y;
 
 		//then rotate
 
@@ -56,8 +45,8 @@ class Point {
 
 		//then translate back
 
-		this.x = origin_xr + center.getX();
-		this.y = origin_xr + center.getY();
+		this.x = origin_xr + center.x;
+		this.y = origin_xr + center.y;
 	}
 
 }
