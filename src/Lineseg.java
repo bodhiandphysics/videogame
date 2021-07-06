@@ -7,8 +7,17 @@ class Lineseg {
 
 	public Lineseg(Point startpoint, Point endpoint) {
 
+		if (startpoint == null || endpoint == null) {   //ensure null safety by preventing Linesegs with null points
+
+			throw IllegalArgumentException;
+
+		} else {
+
 		this.startpoint = startpoint;
+
 		this.endpoint = endpoint;
+
+		}
 	}
 
 	public double slope() {
@@ -43,12 +52,16 @@ class Lineseg {
 
 	public boolean contains(Point point) {
 
+		if (point == null) return false;
+
 		if (this.inyRange(point.getX()) && this.inxRange(point.getY())) return true;
 		return false;
 	}
 
 
 	public boolean doesIntercept(Lineseg other) {
+
+		if (other = null) return false;
 
 		//First check that linesegs aren't parralel
 

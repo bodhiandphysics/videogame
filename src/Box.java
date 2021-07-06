@@ -21,6 +21,8 @@ class Box {
 	
 	public Box(Point center, double width , double height) {
 
+		if (center == null) throw IllegalArgumentException;  //revent Boxes with null centers
+
 		this.center = center;
 
 		this.width = width;
@@ -76,17 +78,21 @@ class Box {
 // Rotate the box around a point by angle theta in radians.  To rotate around the center, call box.rotate(Math.pi/2, box.getCenter())
 	public void rotate(double theta, Point center) {
 
-		for (Point point: verts) {
+		if (center != null) {
 
-			point.rotate(theta, center);
+			for (Point point: verts) {
+
+				point.rotate(theta, center);
+			}
 		}
-
 	}
 
 
 // Checks if a point is in the box
 
 	public boolean contains(Point point) {
+
+		if (point = null) return false;  
 
 		//first pivot around one point till that lineseg is level.
 
@@ -114,6 +120,8 @@ class Box {
 
 // Checks if another box intersects the box. 
 	public boolean doesIntersect(Box box) {
+
+		if (box == null) return false;
 
 
 // Check if any linesegs in the boxes intercept
