@@ -13,29 +13,29 @@ class Lineseg {
 
 	public double slope() {
 
-		return (this.endpoint.y - this.startpoint.y) / (this.endpoint.x - this.startpoint.x);
+		return (this.endpoint.getY() - this.startpoint.getY()) / (this.endpoint.getX() - this.startpoint.getX());
 	}
 
 	public boolean inxRange (double xcoor) {
 
-		if (startpoint.x <= endpoint.x) {
+		if (startpoint.getX() <= endpoint.getX()) {
 
-			if (startpoint.x <= xcoor && endpoint.x >= xcoor) return true;
+			if (startpoint.getX() <= xcoor && endpoint.getX() >= xcoor) return true;
 			return false;
 		} else {
-			if (endpoint.x <= xcoor && startpoint.x >= xcoor) return true;
+			if (endpoint.getX() <= xcoor && startpoint.getX() >= xcoor) return true;
 			return false;
 		}
 	}
 
 	public boolean inyRange (double ycoor) {
 
-		if (startpoint.y <= endpoint.y) {
+		if (startpoint.getY() <= endpoint.getY()) {
 
-			if (startpoint.y <= ycoor && endpoint.y >= ycoor) return true;
+			if (startpoint.getY() <= ycoor && endpoint.getY() >= ycoor) return true;
 			return false;
 		} else {
-			if (endpoint.y <= ycoor && startpoint.y >= ycoor) return true;
+			if (endpoint.getY() <= ycoor && startpoint.getY() >= ycoor) return true;
 			return false;
 		}
 	}
@@ -43,7 +43,7 @@ class Lineseg {
 
 	public boolean contains(Point point) {
 
-		if (this.inyRange(point.x) && this.inxRange(point.y)) return true;
+		if (this.inyRange(point.getX()) && this.inxRange(point.getY())) return true;
 		return false;
 	}
 
@@ -60,10 +60,10 @@ class Lineseg {
 
 		// Next check for intercept of full lines
 
-		double thisx = this.startpoint.x;
-		double otherx = other.startpoint.x;
-		double thisy = this.startpoint.y;
-		double othery = other.startpoint.y;
+		double thisx = this.startpoint.getX();
+		double otherx = other.startpoint.getX();
+		double thisy = this.startpoint.getY();
+		double othery = other.startpoint.getY();
 
 		double xintercept = ((othery - thisy) + (thisslope * thisx) - (otherslope * otherx)) / (thisslope - otherslope);
 

@@ -27,10 +27,10 @@ class Box {
 
 		this.height = height;
 
-		this.verts = new Point[] {new Point(this.center.x - (width/2), this.center.y - (height/2)),
-						 new Point(this.center.x + (width/2), this.center.y - (height/2)),
-						 new Point(this.center.x - (width/2), this.center.y + (height/2)),
-						 new Point(this.center.x + (width/2), this.center.y + (height/2))};
+		this.verts = new Point[] {new Point(this.center.getX() - (width/2), this.center.getY() - (height/2)),
+						 new Point(this.center.getX() + (width/2), this.center.getY() - (height/2)),
+						 new Point(this.center.getX() - (width/2), this.center.getY() + (height/2)),
+						 new Point(this.center.getX() + (width/2), this.center.getY() + (height/2))};
 
 		this.linesegs = new Lineseg[] {new Lineseg(this.verts[0], this.verts[1]),
 						 new Lineseg(this.verts[0], this.verts[2]),
@@ -91,17 +91,17 @@ class Box {
 		//first pivot around one point till that lineseg is level.
 
 		Lineseg aseg = this.linesegs[0];
-		double deltay = aseg.endpoint.y - aseg.startpoint.y;
-		double deltax = aseg.endpoint.x - aseg.startpoint.x;
+		double deltay = aseg.endpoint.getY() - aseg.startpoint.getY();
+		double deltax = aseg.endpoint.getX() - aseg.startpoint.getX();
 		double theta = Math.atan2(deltay, deltax);
 
 		Box levelbox = new Box(this.center, this.width, this.height);
 
-		Point rotatedpoint = new Point(point.x,point.y);
+		Point rotatedpoint = new Point(point.getX(),point.getY());
 
 		rotatedpoint.rotate(-theta, aseg.startpoint);
 
-		if (Math.abs(levelbox.center.x - rotatedpoint.x) <= (levelbox.width / 2) && (Math.abs(levelbox.center.y - rotatedpoint.y) <= (levelbox.height/ 2))) {
+		if (Math.abs(levelbox.center.getX() - rotatedpoint.getX()) <= (levelbox.width / 2) && (Math.abs(levelbox.center.getY() - rotatedpoint.getY()) <= (levelbox.height/ 2))) {
 
 			return true;
 		

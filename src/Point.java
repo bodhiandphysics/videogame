@@ -3,9 +3,9 @@
 
 class Point {
 
-	public double x;
+	private double x;
 
-	public double y;
+	private double y;
 
 
 // Constructor of the point
@@ -18,6 +18,18 @@ class Point {
 	}
 
 
+// Getters and Setters
+
+	public double getX() {
+
+		return x;
+	}
+
+
+	public double getY() {
+
+		return y;
+	}
 
 // Translate the Point by the vector x y
 
