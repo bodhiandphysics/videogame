@@ -9,7 +9,7 @@ class Lineseg {
 
 		if (startpoint == null || endpoint == null) {   //ensure null safety by preventing Linesegs with null points
 
-			throw IllegalArgumentException;
+			throw new IllegalArgumentException("Null Point in Lineseg");
 
 		} else {
 
@@ -61,7 +61,7 @@ class Lineseg {
 
 	public boolean doesIntercept(Lineseg other) {
 
-		if (other = null) return false;
+		if (other == null) return false;
 
 		//First check that linesegs aren't parralel
 

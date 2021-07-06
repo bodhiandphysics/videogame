@@ -21,7 +21,7 @@ class Box {
 	
 	public Box(Point center, double width , double height) {
 
-		if (center == null) throw IllegalArgumentException;  //revent Boxes with null centers
+		if (center == null) throw new IllegalArgumentException("Null Point at center of Box");  //revent Boxes with null centers
 
 		this.center = center;
 
@@ -92,7 +92,7 @@ class Box {
 
 	public boolean contains(Point point) {
 
-		if (point = null) return false;  
+		if (point == null) return false;  
 
 		//first pivot around one point till that lineseg is level.
 
