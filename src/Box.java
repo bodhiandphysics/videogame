@@ -3,8 +3,6 @@
 
 class Box {
 
-  //this is a comment!
-
   private Point center;
 
   private double width;
