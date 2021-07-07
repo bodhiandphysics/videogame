@@ -2,81 +2,74 @@ import java.util.ArrayList;
 
 class Pawn {
 
-	private Point position;
-	private ArrayList<Box> boundingBoxes;
-	private double direction;
-	private double velocityX;
-	private double velocityY; //TODO Create a vector class?
-	private double angularV;
+  private Point position;
+  private ArrayList<Box> boundingBoxes;
+  private double direction;
+  private double velocityX;
+  private double velocityY; // TODO Create a vector class?
+  private double angularV;
 
-	//private CollisionManager colmangr;  TODO once CollisionManager is implemented
+  // private CollisionManager colmangr;  TODO once CollisionManager is implemented
 
-	//No Constructor, because Pawn will never be instantiated directly
+  // No Constructor, because Pawn will never be instantiated directly
 
-	//Getters and Setters
+  // Getters and Setters
 
+  public Point getPosition() {
 
-	public Point getPosition() { 
+    return position;
+  }
 
-		return position;
+  public ArrayList<Box> getBounds() {
 
-	}
+    return boundingBoxes;
+  }
 
-	public ArrayList<Box> getBounds() {
+  public double getDirection() {
 
-		return boundingBoxes;
-	} 
+    return direction;
+  }
 
+  public double getVelocityX() {
 
-	public double getDirection() {
+    return velocityX;
+  }
 
-		return direction;
-	}
+  public double getVelocityY() {
 
-	public double getVelocityX() {
+    return velocityY;
+  }
 
-		return velocityX;
-	}
+  public void translate(double x, double y) {
 
-	public double getVelocityY() {
+    position.translate(x, y);
+  }
 
-		return velocityY;
-	}
+  public void rotate(double theta, Point center) {
 
+    position.rotate(theta, center);
 
-	public void translate(double x, double y) { 
+    for (Box box : boundingBoxes) {
 
-		position.translate(x,y);
+      box.rotate(theta, center);
+    }
+  }
 
-	}
+  public void update(double deltaT) {
 
-	public void rotate(double theta, Point center) {
+    double newdirection = direction + (angularV * deltaT); // TODO do we mod by Math.PI?
+    double deltaTheta = newdirection - direction;
+    double deltaX = velocityX * deltaT;
+    double deltaY = velocityY * deltaT;
 
-		position.rotate(theta, center);
+    this.rotate(deltaTheta, position);
 
-		for (Box box: boundingBoxes) {
+    this.translate(deltaX, deltaY);
 
-			box.rotate(theta, center);
-		}
-	}
+    for (Box box : boundingBoxes) {
 
-
-	public void update(double deltaT) {
-
-		double newdirection = direction + (angularV * deltaT); // TODO do we mod by Math.PI?
-		double deltaTheta = newdirection - direction;
-		double deltaX = velocityX*deltaT;
-		double deltaY = velocityY*deltaT;
-		
-		this.rotate(deltaTheta, position);
-		
-		this.translate(deltaX, deltaY);
-
-		for (Box box: boundingBoxes) {
-
-			box.rotate(deltaTheta, position);
-			box.translate(deltaX, deltaY);
-		}
-
-	}
+      box.rotate(deltaTheta, position);
+      box.translate(deltaX, deltaY);
+    }
+  }
 }

@@ -1,90 +1,88 @@
 class Lineseg {
 
-	public Point startpoint;
-	public Point endpoint;
+  public Point startpoint;
+  public Point endpoint;
 
-	final double cutoff = .0001;
+  final double cutoff = .0001;
 
-	public Lineseg(Point startpoint, Point endpoint) {
+  public Lineseg(Point startpoint, Point endpoint) {
 
-		if (startpoint == null || endpoint == null) {   //ensure null safety by preventing Linesegs with null points
+    if (startpoint == null
+        || endpoint == null) { // ensure null safety by preventing Linesegs with null points
 
-			throw new IllegalArgumentException("Null Point in Lineseg");
+      throw new IllegalArgumentException("Null Point in Lineseg");
 
-		} else {
+    } else {
 
-		this.startpoint = startpoint;
+      this.startpoint = startpoint;
 
-		this.endpoint = endpoint;
+      this.endpoint = endpoint;
+    }
+  }
 
-		}
-	}
+  public double slope() {
 
-	public double slope() {
+    return (this.endpoint.getY() - this.startpoint.getY())
+        / (this.endpoint.getX() - this.startpoint.getX());
+  }
 
-		return (this.endpoint.getY() - this.startpoint.getY()) / (this.endpoint.getX() - this.startpoint.getX());
-	}
+  public boolean inxRange(double xcoor) {
 
-	public boolean inxRange (double xcoor) {
+    if (startpoint.getX() <= endpoint.getX()) {
 
-		if (startpoint.getX() <= endpoint.getX()) {
+      if (startpoint.getX() <= xcoor && endpoint.getX() >= xcoor) return true;
+      return false;
+    } else {
+      if (endpoint.getX() <= xcoor && startpoint.getX() >= xcoor) return true;
+      return false;
+    }
+  }
 
-			if (startpoint.getX() <= xcoor && endpoint.getX() >= xcoor) return true;
-			return false;
-		} else {
-			if (endpoint.getX() <= xcoor && startpoint.getX() >= xcoor) return true;
-			return false;
-		}
-	}
+  public boolean inyRange(double ycoor) {
 
-	public boolean inyRange (double ycoor) {
+    if (startpoint.getY() <= endpoint.getY()) {
 
-		if (startpoint.getY() <= endpoint.getY()) {
+      if (startpoint.getY() <= ycoor && endpoint.getY() >= ycoor) return true;
+      return false;
+    } else {
+      if (endpoint.getY() <= ycoor && startpoint.getY() >= ycoor) return true;
+      return false;
+    }
+  }
 
-			if (startpoint.getY() <= ycoor && endpoint.getY() >= ycoor) return true;
-			return false;
-		} else {
-			if (endpoint.getY() <= ycoor && startpoint.getY() >= ycoor) return true;
-			return false;
-		}
-	}
+  public boolean contains(Point point) {
 
+    if (point == null) return false;
 
-	public boolean contains(Point point) {
+    if (this.inyRange(point.getX()) && this.inxRange(point.getY())) return true;
+    return false;
+  }
 
-		if (point == null) return false;
+  public boolean doesIntercept(Lineseg other) {
 
-		if (this.inyRange(point.getX()) && this.inxRange(point.getY())) return true;
-		return false;
-	}
+    if (other == null) return false;
 
+    // First check that linesegs aren't parralel
 
-	public boolean doesIntercept(Lineseg other) {
+    double thisslope = this.slope();
 
-		if (other == null) return false;
+    double otherslope = other.slope();
 
-		//First check that linesegs aren't parralel
+    if (Math.abs(thisslope - otherslope) < cutoff) return false;
 
-		double thisslope = this.slope();
+    // Next check for intercept of full lines
 
-		double otherslope = other.slope();
+    double thisx = this.startpoint.getX();
+    double otherx = other.startpoint.getX();
+    double thisy = this.startpoint.getY();
+    double othery = other.startpoint.getY();
 
-		if (Math.abs(thisslope - otherslope) < cutoff) return false;
+    double xintercept =
+        ((othery - thisy) + (thisslope * thisx) - (otherslope * otherx)) / (thisslope - otherslope);
 
-		// Next check for intercept of full lines
+    // make sure xintercept is on both of the lines
 
-		double thisx = this.startpoint.getX();
-		double otherx = other.startpoint.getX();
-		double thisy = this.startpoint.getY();
-		double othery = other.startpoint.getY();
-
-		double xintercept = ((othery - thisy) + (thisslope * thisx) - (otherslope * otherx)) / (thisslope - otherslope);
-
-		// make sure xintercept is on both of the lines
-
-		if (this.inxRange(xintercept) && other.inxRange(xintercept)) return true;
-		return false;
-
-
-	}
+    if (this.inxRange(xintercept) && other.inxRange(xintercept)) return true;
+    return false;
+  }
 }
